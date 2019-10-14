@@ -13,7 +13,7 @@ class StringList
 	llist *_data;
 
 	public:
-	
+
 	// default constructor
 	StringList()
 	{
@@ -38,6 +38,12 @@ class StringList
 		return _data->str;
 	}
 
+	std::string& back()
+	{
+		std::string val = str + size()
+		return _data+val;
+	}
+
 	void push_front(std::string str)
 	{
 		llist *newItem = new llist;
@@ -56,6 +62,39 @@ class StringList
 	bool empty() const
 	{
 		return _data == 0;
+	}
+
+	int size()
+	{
+		int size = 0;
+		while(_data->next != NULL)
+		{
+			_data->next++;
+			size++;
+		}
+		return size;
+	}
+
+	void clear()
+	{
+		while (!empty())
+			pop_front();
+	}
+
+	void push_back()
+	{
+	}
+
+	void pop_back()
+	{
+	}
+
+	void reverse()
+	{
+	}
+
+	void unique()
+	{
 	}
 };
 
