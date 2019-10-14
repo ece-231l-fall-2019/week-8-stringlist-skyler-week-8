@@ -4,7 +4,7 @@
 class StringList
 {
 	private:
-
+	size_t _size;
 	typedef struct llist {
 		std::string str;
 		struct llist *next;
@@ -18,6 +18,7 @@ class StringList
 	StringList()
 	{
 		_data = 0;
+		_size = 0;
 	}
 
 	// copy constructor
@@ -40,8 +41,13 @@ class StringList
 
 	std::string& back()
 	{
-		std::string val = str + size()
-		return _data+val;
+		while(true)
+		{
+			if (_data->next == NULL)
+				return _data->str;
+			else
+				_data->next++;
+		}
 	}
 
 	void push_front(std::string str)
@@ -66,13 +72,7 @@ class StringList
 
 	int size()
 	{
-		int size = 0;
-		while(_data->next != NULL)
-		{
-			_data->next++;
-			size++;
-		}
-		return size;
+		return _size;
 	}
 
 	void clear()
