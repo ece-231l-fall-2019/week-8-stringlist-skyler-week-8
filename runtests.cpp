@@ -34,7 +34,6 @@ int main()
 	a.push_front("D");
 	a.push_back("E");
 
-	dbg(a);
 	dbg(a.size());
 	dbg(a.front());
 	dbg(a.back());
