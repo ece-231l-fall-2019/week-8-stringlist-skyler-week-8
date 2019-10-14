@@ -24,23 +24,7 @@ int main()
 	// TODO:
 	// Write *at least* 15 more tests to fully test
 	// your class.
-	/* operator=
 
-empty
-size
-clear
-
-front
-back
-
-push_back
-push_front
-pop_back
-pop_front
-
-reverse
-unique
-*/
 	StringList a;
 
 	a.push_back("A");
