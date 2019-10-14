@@ -24,7 +24,23 @@ int main()
 	// TODO:
 	// Write *at least* 15 more tests to fully test
 	// your class.
+	/* operator=
 
+empty
+size
+clear
+
+front
+back
+
+push_back
+push_front
+pop_back
+pop_front
+
+reverse
+unique
+*/
 	StringList a;
 
 	a.push_back("A");
@@ -45,6 +61,51 @@ int main()
 	Assert(a.front() == "A", "front method");
 	a.pop_back();
 	Assert(a.back() == "A", "back method");
+        
+	StringList b;
+	b.push_back("R");
+	b.push_front("P");
+	a.clear();
+	Assert(a.empty(), "empty method");
+	a.push_back("K");
+	Assert(a.front() == "K", "One item front method");
+	Assert(a.back() == "K", "One item back method");
+	a = b;
+	Assert(a.back() == "R", "= method, test back val");
+	Assert(a.front() == "P", "= method test front val");
+
+	b.push_front("P");
+	b.push_back("R");
+	b.unique();
+
+	Assert(b.size() == 2 && b.back() == "R" && b.front() == "P", \
+			"unique method.()");
+	b.reverse();
+	Assert(b.back() == "P" && b.front() == "R", "reverse method");
+	a.reverse();
+	Assert(a.front() == b.front() && a.back() == b.back(), \
+			"reverse method test 2");
+	a.clear();
+	Assert(a.size() == 0,"clear test 2");
+
+	b.pop_back();
+	b.pop_front();
+	Assert(a.size() == b.size(), "clear using pop methods");
+
+	a.push_front("Y");
+	a.push_front("L");
+	StringList c = a;
+	
+	Assert(c.front() == a.front(), "= operator method");
+
+	Assert(c.front() == "L" && c.back() == "Y", "push_front method");
+	a.push_back("M");
+	Assert(a.back() == "M", "push back");
+	c.clear();
+	Assert(c.empty(), "clear and empty methods");
+	a.clear();
+	Assert(c.size() == a.size(), "clear and size methods");
+
 	return 0;
 }
 
