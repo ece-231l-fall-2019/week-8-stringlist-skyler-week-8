@@ -67,7 +67,6 @@ class StringList {
 		_size++;
 	}
 
-
 	void push_back(std::string str)
 	{
 		llist *newItem = new llist;
@@ -78,14 +77,6 @@ class StringList {
 			newItem->prev->next = newItem;
 		_back = newItem;
 		_size++;
-	}
-
-	void pop_front()
-	{
-		llist *front = _front;
-		_front = front->next;
-		delete front;
-		_size--;
 	}
 
 	bool empty() const
@@ -107,12 +98,37 @@ class StringList {
 		}
 	}
 
+	void pop_front()
+	{
+		llist *ptr = _front;
+		_front = ptr->next;
+		delete ptr;
+		_size--;
+	}
 	void pop_back()
 	{
+		llist *ptr = _back;
+		_back = ptr->prev;
+		_back->next = 0;
+		delete ptr;
+		_size--;
 	}
 
 	void reverse()
 	{
+		llist *ptr = new llist;
+		llist *tmp = new llist;
+		for(ptr = _front; ptr != 0; ptr = ptr->prev)
+		{
+			tmp = ptr->next;
+			ptr->next = ptr->prev;
+			ptr->prev = tmp;
+		}
+		tmp = _back;
+		_back = _front;
+		_front = tmp;
+		delete tmp;
+		delete ptr;
 	}
 
 	void unique()

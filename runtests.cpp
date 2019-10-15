@@ -38,7 +38,6 @@ int main()
 	dbg(a.front());
 	dbg(a.back());
 	Assert(a.size() == 5, "size method");
-
 	Assert(a.front() == "D", "front method");
 	a.pop_front();
 	Assert(a.front() == "C", "pop_front method");
@@ -49,7 +48,7 @@ int main()
 	Assert(a.front() == "A", "front method");
 	a.pop_back();
 	Assert(a.back() == "A", "back method");
-        
+
 	StringList b;
 	b.push_back("R");
 	b.push_front("P");
@@ -83,7 +82,7 @@ int main()
 	a.push_front("Y");
 	a.push_front("L");
 	StringList c = a;
-	
+
 	Assert(c.front() == a.front(), "= operator method");
 
 	Assert(c.front() == "L" && c.back() == "Y", "push_front method");
@@ -96,5 +95,3 @@ int main()
 
 	return 0;
 }
-
-
