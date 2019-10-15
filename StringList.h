@@ -18,15 +18,18 @@ class StringList {
 	// default constructor
 	StringList()
 	{
-		std::cout << "Constructor\n";
 		_front = 0;
 		_back = 0;
 		_size = 0;
 	}
 
 	// copy constructor
-	StringList(const StringList&);
-
+	StringList(const StringList& other)
+	{
+		_front = other._front;
+		_back = other._back;
+		_size = other._size;
+	}
 	// destructor
 	~StringList()
 	{
@@ -34,23 +37,26 @@ class StringList {
 	}
 
 	// copy operator
-	StringList& operator=(const StringList&);
+	StringList& operator=(const StringList& other)
+	{
+		this->_front = other._front;
+		this->_back = other._back;
+		_size = other._size;
+		return *this;
+	}
 
 	std::string& front()
 	{
-		std::cout << "front()\n";
 		return _front->str;
 	}
 
 	std::string& back()
 	{
-		std::cout << "back()\n";
 		return _back->str;
 	}
 
 	void push_front(std::string str)
 	{
-		std::cout << "push_front()\n";
 		llist *newItem = new llist;
 		newItem->str = str;
 		newItem->next = _front;
@@ -64,7 +70,6 @@ class StringList {
 
 	void push_back(std::string str)
 	{
-		std::cout << "push_back()\n";
 		llist *newItem = new llist;
 		newItem->str = str;
 		newItem->prev = _back;
@@ -77,7 +82,6 @@ class StringList {
 
 	void pop_front()
 	{
-		std::cout << "pop_front()\n";
 		llist *front = _front;
 		_front = front->next;
 		delete front;
@@ -115,4 +119,3 @@ class StringList {
 	{
 	}
 };
-
