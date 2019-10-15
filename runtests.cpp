@@ -1,9 +1,10 @@
 #include <iostream>
+#include "dbg.h"
 
 // change the value below to 1 to run tests against your StringList class.
 // change the value below to 0 to run tests against the built in std::list.
 
-#if 0
+#if 1
 #include "StringList.h"
 #else
 #include <list>
@@ -33,6 +34,9 @@ int main()
 	a.push_front("D");
 	a.push_back("E");
 
+	dbg(a.size());
+	dbg(a.front());
+	dbg(a.back());
 	Assert(a.size() == 5, "size method");
 
 	Assert(a.front() == "D", "front method");

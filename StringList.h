@@ -1,23 +1,27 @@
 #include <iostream>
 #include <string>
 
-class StringList
-{
+class StringList {
 	private:
-
+	size_t _size;
 	typedef struct llist {
 		std::string str;
 		struct llist *next;
+		struct llist *prev;
 	} llist;
 
-	llist *_data;
+	llist *_back;
+	llist *_front;
 
 	public:
-	
+
 	// default constructor
 	StringList()
 	{
-		_data = 0;
+		std::cout << "Constructor\n";
+		_front = 0;
+		_back = 0;
+		_size = 0;
 	}
 
 	// copy constructor
@@ -26,8 +30,7 @@ class StringList
 	// destructor
 	~StringList()
 	{
-		while(!empty())
-			pop_front();
+		clear();
 	}
 
 	// copy operator
@@ -35,27 +38,81 @@ class StringList
 
 	std::string& front()
 	{
-		return _data->str;
+		std::cout << "front()\n";
+		return _front->str;
+	}
+
+	std::string& back()
+	{
+		std::cout << "back()\n";
+		return _back->str;
 	}
 
 	void push_front(std::string str)
 	{
+		std::cout << "push_front()\n";
 		llist *newItem = new llist;
 		newItem->str = str;
-		newItem->next = _data;
-		_data = newItem;
+		newItem->next = _front;
+		newItem->prev = 0;
+		if(newItem->next != 0)
+			newItem->next->prev = newItem;
+		_front = newItem;
+		_size++;
+	}
+
+
+	void push_back(std::string str)
+	{
+		std::cout << "push_back()\n";
+		llist *newItem = new llist;
+		newItem->str = str;
+		newItem->prev = _back;
+		newItem->next = 0;
+		if(newItem->prev != 0)
+			newItem->prev->next = newItem;
+		_back = newItem;
+		_size++;
 	}
 
 	void pop_front()
 	{
-		llist *front = _data;
-		_data = front->next;
+		std::cout << "pop_front()\n";
+		llist *front = _front;
+		_front = front->next;
 		delete front;
+		_size--;
 	}
 
 	bool empty() const
 	{
-		return _data == 0;
+		return (_front == _back) == 0;
+	}
+
+	int size()
+	{
+		return _size;
+	}
+
+	void clear()
+	{
+		while (!empty())
+		{
+			pop_front();
+			_size--;
+		}
+	}
+
+	void pop_back()
+	{
+	}
+
+	void reverse()
+	{
+	}
+
+	void unique()
+	{
 	}
 };
 
