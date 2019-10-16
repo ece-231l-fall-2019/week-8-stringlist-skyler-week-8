@@ -33,7 +33,7 @@ int main()
 	a.push_front("C");
 	a.push_front("D");
 	a.push_back("E");
-
+	a.printData();
 	dbg(a.size());
 	dbg(a.front());
 	dbg(a.back());

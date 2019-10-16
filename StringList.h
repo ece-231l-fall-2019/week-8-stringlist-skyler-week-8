@@ -55,13 +55,24 @@ class StringList {
 		return _back->str;
 	}
 
+	void printData()
+	{
+		llist *ptr = new llist;
+		for(ptr = _front; ptr != 0; ptr = ptr->next)
+			std::cout << ptr->str << std::endl;
+	}
+
 	void push_front(std::string str)
 	{
 		llist *newItem = new llist;
 		newItem->str = str;
 		newItem->next = _front;
-		newItem->prev = 0;
-		if(newItem->next != 0)
+		if(newItem->next == 0)
+		{
+			_back = newItem;
+			newItem->prev = 0;
+		}
+		else
 			newItem->next->prev = newItem;
 		_front = newItem;
 		_size++;
@@ -72,8 +83,12 @@ class StringList {
 		llist *newItem = new llist;
 		newItem->str = str;
 		newItem->prev = _back;
-		newItem->next = 0;
-		if(newItem->prev != 0)
+		if(newItem->prev == 0)
+		{
+			_front = newItem;
+			newItem->next = 0;
+		}
+		else
 			newItem->prev->next = newItem;
 		_back = newItem;
 		_size++;
@@ -100,16 +115,17 @@ class StringList {
 
 	void pop_front()
 	{
-		llist *ptr = _front;
+		llist *ptr = new llist;
+		ptr = _front;
 		_front = ptr->next;
 		delete ptr;
 		_size--;
 	}
 	void pop_back()
 	{
-		llist *ptr = _back;
+		llist *ptr = new llist;
+		ptr = _back;
 		_back = ptr->prev;
-		_back->next = 0;
 		delete ptr;
 		_size--;
 	}
@@ -118,7 +134,7 @@ class StringList {
 	{
 		llist *ptr = new llist;
 		llist *tmp = new llist;
-		for(ptr = _front; ptr != 0; ptr = ptr->prev)
+		for(ptr = _front; ptr->next != 0; ptr = ptr->next)
 		{
 			tmp = ptr->next;
 			ptr->next = ptr->prev;
