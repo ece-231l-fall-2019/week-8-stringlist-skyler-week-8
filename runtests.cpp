@@ -33,7 +33,6 @@ int main()
 	a.push_front("C");
 	a.push_front("D");
 	a.push_back("E");
-	a.printData(1);
 	dbg(a.size());
 	dbg(a.front());
 	dbg(a.back());
@@ -52,8 +51,6 @@ int main()
 	StringList b;
 	b.push_back("R");
 	b.push_front("P");
-	a.printData(1);
-	b.printData(1);
 	a.clear();
 	Assert(a.empty(), "empty method");
 	a.push_back("K");
@@ -61,12 +58,20 @@ int main()
 	b.printData(1);
 	Assert(a.front() == "K", "One item front method");
 	Assert(a.back() == "K", "One item back method");
+	std::cout << "Before assignment:\n";
+	a.printData(1);
+	b.printData(1);
 	a = b;
+	std::cout << "After assignment:\n";
+	a.printData(1);
+	b.printData(1);
 	Assert(a.back() == "R", "= method, test back val");
 	Assert(a.front() == "P", "= method test front val");
 
 	b.push_front("P");
 	b.push_back("R");
+	a.printData(1);
+	b.printData(1);
 	b.unique();
 
 	Assert(b.size() == 2 && b.back() == "R" && b.front() == "P", \

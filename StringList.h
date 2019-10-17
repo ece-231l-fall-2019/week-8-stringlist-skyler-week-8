@@ -39,8 +39,13 @@ class StringList {
 	// copy operator
 	StringList& operator=(const StringList& other)
 	{
-		this->_front = other._front;
-		this->_back = other._back;
+		clear();
+		llist* ptr = other._front;
+		while(ptr != 0)
+		{
+			push_back(ptr->str);
+			ptr = ptr->next;
+		}
 		_size = other._size;
 		return *this;
 	}
@@ -101,7 +106,7 @@ class StringList {
 
 	bool empty() const
 	{
-		return (_front == _back) == 0;
+		return (_front == 0)&&(_back == 0);
 	}
 
 	int size()
@@ -114,7 +119,6 @@ class StringList {
 		while (!empty())
 		{
 			pop_front();
-			_size--;
 		}
 	}
 
@@ -147,7 +151,7 @@ class StringList {
 	{
 		llist *ptr = new llist;
 		llist *tmp = new llist;
-		for(ptr = _front; ptr->next != 0; ptr = ptr->next)
+		for(ptr = _front; ptr != 0; ptr = ptr->next)
 		{
 			tmp = ptr->next;
 			ptr->next = ptr->prev;
@@ -156,8 +160,8 @@ class StringList {
 		tmp = _back;
 		_back = _front;
 		_front = tmp;
-		delete tmp;
-		delete ptr;
+		// delete tmp;
+		// delete ptr;
 	}
 
 	void unique()
