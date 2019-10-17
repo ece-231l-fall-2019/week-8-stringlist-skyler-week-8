@@ -172,14 +172,21 @@ class StringList {
 	void unique()
 	{
 		llist *ptr = new llist;
-		clear();
+
 		for(ptr = _front; ptr->next != NULL; ptr = ptr->next)
 		{
-			if (ptr->str != ptr->next->str)
+			dbg(ptr->str);
+			
+			if (ptr->str == ptr->next->str)
 			{
-				push_front(ptr->str);
+				dbg(ptr->next->str);
+				ptr->next->next->prev = ptr;
+				ptr->next = ptr->next->next;
+				dbg(ptr->next);
+				dbg(back());
 			}
 		}
-
 	}
+		
+
 };
