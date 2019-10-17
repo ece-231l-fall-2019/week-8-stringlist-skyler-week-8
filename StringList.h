@@ -173,18 +173,25 @@ class StringList {
 	{
 		llist *ptr = new llist;
 
-		for(ptr = _front; ptr->next != NULL; ptr = ptr->next)
+		for(ptr = _front; ptr != 0; ptr = ptr->next)
 		{
-			dbg(ptr->str);
 			
-			if (ptr->str == ptr->next->str)
+			while (ptr->next != 0 && ptr->str == ptr->next->str)
 			{
-				dbg(ptr->next->str);
-				ptr->next->next->prev = ptr;
-				ptr->next = ptr->next->next;
-				dbg(ptr->next);
-				dbg(back());
+				llist *temp = ptr->next;
+				if(temp->next == 0)
+				{
+					_back = ptr;
+				}
+				else
+				{
+					ptr->next = ptr->next->next;
+					ptr->next->prev = ptr;
+				}
+				delete temp;
+				_size--;
 			}
+
 		}
 	}
 		
