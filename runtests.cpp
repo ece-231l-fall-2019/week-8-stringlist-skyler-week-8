@@ -57,6 +57,8 @@ int main()
 	a.clear();
 	Assert(a.empty(), "empty method");
 	a.push_back("K");
+	a.printData(1);
+	b.printData(1);
 	Assert(a.front() == "K", "One item front method");
 	Assert(a.back() == "K", "One item back method");
 	a = b;

@@ -72,16 +72,15 @@ class StringList {
 
 	void push_front(std::string str)
 	{
+		//TODO: Rewrite this for push_front
 		llist *newItem = new llist;
 		newItem->str = str;
+		newItem->prev = 0;
 		newItem->next = _front;
-		if(newItem->next == 0)
-		{
+		if(_front != 0)
+			_front->prev = newItem;
+		if(_back == 0)
 			_back = newItem;
-			newItem->prev = 0;
-		}
-		else
-			newItem->next->prev = newItem;
 		_front = newItem;
 		_size++;
 	}
@@ -90,14 +89,12 @@ class StringList {
 	{
 		llist *newItem = new llist;
 		newItem->str = str;
+		newItem->next = 0;
 		newItem->prev = _back;
-		if(newItem->prev == 0)
-		{
+		if(_back != 0)
+			_back->next = newItem;
+		if(_front == 0)
 			_front = newItem;
-			newItem->next = 0;
-		}
-		else
-			newItem->prev->next = newItem;
 		_back = newItem;
 		_size++;
 	}
@@ -123,32 +120,26 @@ class StringList {
 
 	void pop_front()
 	{
-		// ptr2 = _front;
-		// _front = ptr2->next;
-		if(_front->next != 0)
+		llist* saveptr = _front;
+		_front = _front->next;
+		if(_front)
 		{
-			_front = _front->next;
-			_front->prev = NULL;
+			_front->prev = _front->prev->prev;
 		}
 		else
-		{
-			_front = 0;
-		}
+			_back = 0;
+		delete saveptr;
 		_size--;
 	}
 	void pop_back()
 	{
-		// ptr2 = _back;
-		// _back = ptr2->prev;
-		if(_back->prev != 0)
-		{
-			_back = _back->prev;
-			_back->next = NULL;
-		}
+		llist* saveptr = _back;
+		_back = _back->prev;
+		if(_back)
+			_back->next = _back->next->next;
 		else
-		{
-			_back = 0;
-		}
+			_front = 0;
+		delete saveptr;
 		_size--;
 	}
 
@@ -171,5 +162,19 @@ class StringList {
 
 	void unique()
 	{
+		for(llist* ptr = _front; ptr != 0; ptr=ptr->next)
+		{
+			while((ptr->next != 0)&&(ptr->str==ptr->next->str))
+			{
+				llist* saveptr = ptr->next;
+				ptr->next = saveptr->next;
+				if(saveptr->next != 0)
+					saveptr->next->prev = ptr;
+				else
+					_back = ptr;
+				delete saveptr;
+				_size--;
+			}
+		}
 	}
 };
