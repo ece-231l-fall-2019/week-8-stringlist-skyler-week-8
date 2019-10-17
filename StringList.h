@@ -171,5 +171,15 @@ class StringList {
 
 	void unique()
 	{
+		llist *ptr = new llist;
+		clear()
+		for(ptr = _front; ptr->next != NULL; ptr = ptr->next)
+		{
+			if (ptr != ptr->next)
+			{
+				push_front(*ptr);
+			}
+		}
+
 	}
 };
