@@ -33,7 +33,7 @@ int main()
 	a.push_front("C");
 	a.push_front("D");
 	a.push_back("E");
-	a.printData();
+	a.printData(1);
 	dbg(a.size());
 	dbg(a.front());
 	dbg(a.back());
@@ -52,6 +52,8 @@ int main()
 	StringList b;
 	b.push_back("R");
 	b.push_front("P");
+	a.printData(1);
+	b.printData(1);
 	a.clear();
 	Assert(a.empty(), "empty method");
 	a.push_back("K");

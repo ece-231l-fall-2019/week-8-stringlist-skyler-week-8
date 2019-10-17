@@ -12,7 +12,7 @@ class StringList {
 
 	llist *_back;
 	llist *_front;
-
+	llist *ptr2;
 	public:
 
 	// default constructor
@@ -55,11 +55,19 @@ class StringList {
 		return _back->str;
 	}
 
-	void printData()
+	void printData(bool addr = 0)
 	{
+		std::cout << std::endl << "Object at Address " << this << ":\n";
 		llist *ptr = new llist;
 		for(ptr = _front; ptr != 0; ptr = ptr->next)
-			std::cout << ptr->str << std::endl;
+		{
+			if(!addr)
+				std::cout << ptr->str << std::endl;
+			else
+				std::cout << "At address " << ptr << ": " << ptr->str << std::endl;
+		}
+		std::cout << std::endl;
+		delete ptr;
 	}
 
 	void push_front(std::string str)
@@ -115,18 +123,32 @@ class StringList {
 
 	void pop_front()
 	{
-		llist *ptr = new llist;
-		ptr = _front;
-		_front = ptr->next;
-		delete ptr;
+		// ptr2 = _front;
+		// _front = ptr2->next;
+		if(_front->next != 0)
+		{
+			_front = _front->next;
+			_front->prev = NULL;
+		}
+		else
+		{
+			_front = 0;
+		}
 		_size--;
 	}
 	void pop_back()
 	{
-		llist *ptr = new llist;
-		ptr = _back;
-		_back = ptr->prev;
-		delete ptr;
+		// ptr2 = _back;
+		// _back = ptr2->prev;
+		if(_back->prev != 0)
+		{
+			_back = _back->prev;
+			_back->next = NULL;
+		}
+		else
+		{
+			_back = 0;
+		}
 		_size--;
 	}
 
