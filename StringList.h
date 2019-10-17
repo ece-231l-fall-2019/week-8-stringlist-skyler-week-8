@@ -104,7 +104,7 @@ class StringList {
 
 	bool empty() const
 	{
-		return (_front == _back) == 0;
+		return (_front == _back);
 	}
 
 	int size()
@@ -172,12 +172,12 @@ class StringList {
 	void unique()
 	{
 		llist *ptr = new llist;
-		clear()
+		clear();
 		for(ptr = _front; ptr->next != NULL; ptr = ptr->next)
 		{
-			if (ptr != ptr->next)
+			if (ptr->str != ptr->next->str)
 			{
-				push_front(*ptr);
+				push_front(ptr->str);
 			}
 		}
 
