@@ -12,7 +12,6 @@ class StringList {
 
 	llist *_back;
 	llist *_front;
-	llist *ptr2;
 	public:
 
 	// default constructor
@@ -46,7 +45,7 @@ class StringList {
 			push_back(ptr->str);
 			ptr = ptr->next;
 		}
-		_size = other._size;
+		this->_size = other._size;
 		return *this;
 	}
 
@@ -60,24 +59,36 @@ class StringList {
 		return _back->str;
 	}
 
+//Used for address debugging
+/*
 	void printData(bool addr = 0)
 	{
-		std::cout << std::endl << "Object at Address " << this << ":\n";
+		std::cout << "Object at Address " << this << ":\n";
 		llist *ptr = new llist;
 		for(ptr = _front; ptr != 0; ptr = ptr->next)
 		{
 			if(!addr)
-				std::cout << ptr->str << std::endl;
+			{
+				if(ptr->str != "")
+					std::cout << ptr->str << std::endl;
+				else
+					std::cout << "-" << std::endl;
+			}
 			else
-				std::cout << "At address " << ptr << ": " << ptr->str << std::endl;
+			{
+				if(ptr->str != "")
+					std::cout << "At address " << ptr << ": " << ptr->str << std::endl;
+				else
+					std::cout << "-" << std::endl;
+			}
 		}
 		std::cout << std::endl;
 		delete ptr;
 	}
+	*/
 
 	void push_front(std::string str)
 	{
-		//TODO: Rewrite this for push_front
 		llist *newItem = new llist;
 		newItem->str = str;
 		newItem->prev = 0;
@@ -120,30 +131,35 @@ class StringList {
 		{
 			pop_front();
 		}
+		_size = 0;
 	}
 
 	void pop_front()
 	{
-		llist* saveptr = _front;
+		llist* ptr = _front;
 		_front = _front->next;
 		if(_front)
 		{
-			_front->prev = _front->prev->prev;
+			if(_front->prev)
+				_front->prev = _front->prev->prev;
 		}
 		else
 			_back = 0;
-		delete saveptr;
+		delete ptr;
 		_size--;
 	}
 	void pop_back()
 	{
-		llist* saveptr = _back;
+		llist* ptr = _back;
 		_back = _back->prev;
 		if(_back)
-			_back->next = _back->next->next;
+		{
+			if(_back->next)
+				_back->next = _back->next->next;
+		}
 		else
 			_front = 0;
-		delete saveptr;
+		delete ptr;
 		_size--;
 	}
 
@@ -170,6 +186,7 @@ class StringList {
 		{
 			while((ptr->next != 0)&&(ptr->str==ptr->next->str))
 			{
+				_size--;
 				llist* saveptr = ptr->next;
 				ptr->next = saveptr->next;
 				if(saveptr->next != 0)
@@ -177,7 +194,6 @@ class StringList {
 				else
 					_back = ptr;
 				delete saveptr;
-				_size--;
 			}
 		}
 	}

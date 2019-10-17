@@ -33,9 +33,6 @@ int main()
 	a.push_front("C");
 	a.push_front("D");
 	a.push_back("E");
-	dbg(a.size());
-	dbg(a.front());
-	dbg(a.back());
 	Assert(a.size() == 5, "size method");
 	Assert(a.front() == "D", "front method");
 	a.pop_front();
@@ -54,24 +51,14 @@ int main()
 	a.clear();
 	Assert(a.empty(), "empty method");
 	a.push_back("K");
-	a.printData(1);
-	b.printData(1);
 	Assert(a.front() == "K", "One item front method");
 	Assert(a.back() == "K", "One item back method");
-	std::cout << "Before assignment:\n";
-	a.printData(1);
-	b.printData(1);
 	a = b;
-	std::cout << "After assignment:\n";
-	a.printData(1);
-	b.printData(1);
 	Assert(a.back() == "R", "= method, test back val");
 	Assert(a.front() == "P", "= method test front val");
 
 	b.push_front("P");
 	b.push_back("R");
-	a.printData(1);
-	b.printData(1);
 	b.unique();
 
 	Assert(b.size() == 2 && b.back() == "R" && b.front() == "P", \
@@ -83,7 +70,6 @@ int main()
 			"reverse method test 2");
 	a.clear();
 	Assert(a.size() == 0,"clear test 2");
-
 	b.pop_back();
 	b.pop_front();
 	Assert(a.size() == b.size(), "clear using pop methods");
@@ -101,6 +87,5 @@ int main()
 	Assert(c.empty(), "clear and empty methods");
 	a.clear();
 	Assert(c.size() == a.size(), "clear and size methods");
-
 	return 0;
 }
