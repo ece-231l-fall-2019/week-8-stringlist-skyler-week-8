@@ -33,6 +33,8 @@ class StringList {
 	~StringList()
 	{
 		clear();
+		delete _front;
+		delete _back;
 	}
 
 	// copy operator
@@ -59,8 +61,8 @@ class StringList {
 		return _back->str;
 	}
 
-//Used for address debugging
-/*
+	//Used for address debugging
+	/*
 	void printData(bool addr = 0)
 	{
 		std::cout << "Object at Address " << this << ":\n";
@@ -120,7 +122,7 @@ class StringList {
 		return (_front == 0)&&(_back == 0);
 	}
 
-	int size()
+	size_t size()
 	{
 		return _size;
 	}
@@ -136,7 +138,7 @@ class StringList {
 
 	void pop_front()
 	{
-		llist* ptr = _front;
+//		llist* ptr = _front;
 		_front = _front->next;
 		if(_front)
 		{
@@ -145,12 +147,12 @@ class StringList {
 		}
 		else
 			_back = 0;
-		delete ptr;
+//		delete ptr;
 		_size--;
 	}
 	void pop_back()
 	{
-		llist* ptr = _back;
+//		llist* ptr = _back;
 		_back = _back->prev;
 		if(_back)
 		{
@@ -159,7 +161,7 @@ class StringList {
 		}
 		else
 			_front = 0;
-		delete ptr;
+//		delete ptr;
 		_size--;
 	}
 
@@ -176,8 +178,9 @@ class StringList {
 		tmp = _back;
 		_back = _front;
 		_front = tmp;
-		// delete tmp;
-		// delete ptr;
+		tmp = NULL;
+//		delete tmp;
+//		delete ptr;
 	}
 
 	void unique()
