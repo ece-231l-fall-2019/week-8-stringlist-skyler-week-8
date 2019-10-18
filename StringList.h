@@ -1,3 +1,6 @@
+/* Commented the lines that valgrind doesn't like, using the command "valgrind -v --leak-check=full ./runtests"
+   Each line corresponds to a pointer creation, so fixing those is a top priority. */
+
 #include <iostream>
 #include <string>
 
@@ -91,7 +94,7 @@ class StringList {
 
 	void push_front(std::string str)
 	{
-		llist *newItem = new llist;
+		llist *newItem = new llist; // Valgrind doesn't like this line
 		newItem->str = str;
 		newItem->prev = 0;
 		newItem->next = _front;
@@ -105,7 +108,7 @@ class StringList {
 
 	void push_back(std::string str)
 	{
-		llist *newItem = new llist;
+		llist *newItem = new llist; //Valgrind doesn't like this line
 		newItem->str = str;
 		newItem->next = 0;
 		newItem->prev = _back;
@@ -167,8 +170,8 @@ class StringList {
 
 	void reverse()
 	{
-		llist *ptr = new llist;
-		llist *tmp = new llist;
+		llist *ptr = new llist; //Valgrind doesn't like this line
+		llist *tmp = new llist; //Or this line
 		for(ptr = _front; ptr != 0; ptr = ptr->next)
 		{
 			tmp = ptr->next;
