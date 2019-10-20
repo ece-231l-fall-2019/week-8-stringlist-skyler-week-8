@@ -15,6 +15,7 @@ class StringList {
 
 	llist *_back;
 	llist *_front;
+
 	public:
 
 	// default constructor
@@ -170,18 +171,18 @@ class StringList {
 
 	void reverse()
 	{
-		llist *ptr = new llist; //Valgrind doesn't like this line
-		llist *tmp = new llist; //Or this line
-		for(ptr = _front; ptr != 0; ptr = ptr->next)
+//		llist *ptr = new llist; //Valgrind doesn't like this line
+//		llist *tmp = new llist; //Or this line
+		for(llist* ptr = _front; ptr != 0; ptr = ptr->next)
 		{
-			tmp = ptr->next;
+			llist* tmp = ptr->next;
 			ptr->next = ptr->prev;
 			ptr->prev = tmp;
 		}
-		tmp = _back;
+		llist* tmp2 = _back;
 		_back = _front;
-		_front = tmp;
-		tmp = NULL;
+		_front = tmp2;
+//		tmp = NULL;
 //		delete tmp;
 //		delete ptr;
 	}
