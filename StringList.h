@@ -93,7 +93,7 @@ class StringList {
 	}
 	*/
 
-	void push_front(std::string str)
+	void push_front(const std::string& str)
 	{
 		llist *newItem = new llist; // Valgrind doesn't like this line
 		newItem->str = str;
@@ -107,7 +107,7 @@ class StringList {
 		_size++;
 	}
 
-	void push_back(std::string str)
+	void push_back(const std::string& str)
 	{
 		llist *newItem = new llist; //Valgrind doesn't like this line
 		newItem->str = str;
@@ -204,6 +204,4 @@ class StringList {
 			}
 		}
 	}
-		
-
 };
