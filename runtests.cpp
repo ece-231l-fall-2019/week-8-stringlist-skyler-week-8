@@ -1,9 +1,10 @@
 #include <iostream>
+#include "dbg.h"
 
 // change the value below to 1 to run tests against your StringList class.
 // change the value below to 0 to run tests against the built in std::list.
 
-#if 0
+#if 1
 #include "StringList.h"
 #else
 #include <list>
@@ -32,9 +33,11 @@ int main()
 	a.push_front("C");
 	a.push_front("D");
 	a.push_back("E");
-
+	a.printData(1);
+	dbg(a.size());
+	dbg(a.front());
+	dbg(a.back());
 	Assert(a.size() == 5, "size method");
-
 	Assert(a.front() == "D", "front method");
 	a.pop_front();
 	Assert(a.front() == "C", "pop_front method");
@@ -45,10 +48,12 @@ int main()
 	Assert(a.front() == "A", "front method");
 	a.pop_back();
 	Assert(a.back() == "A", "back method");
-        
+
 	StringList b;
 	b.push_back("R");
 	b.push_front("P");
+	a.printData(1);
+	b.printData(1);
 	a.clear();
 	Assert(a.empty(), "empty method");
 	a.push_back("K");
@@ -79,7 +84,7 @@ int main()
 	a.push_front("Y");
 	a.push_front("L");
 	StringList c = a;
-	
+
 	Assert(c.front() == a.front(), "= operator method");
 
 	Assert(c.front() == "L" && c.back() == "Y", "push_front method");
@@ -92,5 +97,3 @@ int main()
 
 	return 0;
 }
-
-
