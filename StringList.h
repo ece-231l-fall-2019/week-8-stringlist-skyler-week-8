@@ -1,3 +1,6 @@
+/* Commented the lines that valgrind doesn't like, using the command "valgrind -v --leak-check=full ./runtests"
+   Each line corresponds to a pointer creation, so fixing those is a top priority. */
+
 #include <iostream>
 #include <string>
 
@@ -12,7 +15,7 @@ class StringList {
 
 	llist *_back;
 	llist *_front;
-	llist *ptr2;
+
 	public:
 
 	// default constructor
@@ -34,14 +37,21 @@ class StringList {
 	~StringList()
 	{
 		clear();
+		delete _front;
+		delete _back;
 	}
 
 	// copy operator
 	StringList& operator=(const StringList& other)
 	{
-		this->_front = other._front;
-		this->_back = other._back;
-		_size = other._size;
+		clear();
+		llist* ptr = other._front;
+		while(ptr != 0)
+		{
+			push_back(ptr->str);
+			ptr = ptr->next;
+		}
+		this->_size = other._size;
 		return *this;
 	}
 
@@ -55,59 +65,68 @@ class StringList {
 		return _back->str;
 	}
 
+	//Used for address debugging
+	/*
 	void printData(bool addr = 0)
 	{
-		std::cout << std::endl << "Object at Address " << this << ":\n";
+		std::cout << "Object at Address " << this << ":\n";
 		llist *ptr = new llist;
 		for(ptr = _front; ptr != 0; ptr = ptr->next)
 		{
 			if(!addr)
-				std::cout << ptr->str << std::endl;
+			{
+				if(ptr->str != "")
+					std::cout << ptr->str << std::endl;
+				else
+					std::cout << "-" << std::endl;
+			}
 			else
-				std::cout << "At address " << ptr << ": " << ptr->str << std::endl;
+			{
+				if(ptr->str != "")
+					std::cout << "At address " << ptr << ": " << ptr->str << std::endl;
+				else
+					std::cout << "-" << std::endl;
+			}
 		}
 		std::cout << std::endl;
 		delete ptr;
 	}
+	*/
 
 	void push_front(std::string str)
 	{
-		llist *newItem = new llist;
+		llist *newItem = new llist; // Valgrind doesn't like this line
 		newItem->str = str;
+		newItem->prev = 0;
 		newItem->next = _front;
-		if(newItem->next == 0)
-		{
+		if(_front != 0)
+			_front->prev = newItem;
+		if(_back == 0)
 			_back = newItem;
-			newItem->prev = 0;
-		}
-		else
-			newItem->next->prev = newItem;
 		_front = newItem;
 		_size++;
 	}
 
 	void push_back(std::string str)
 	{
-		llist *newItem = new llist;
+		llist *newItem = new llist; //Valgrind doesn't like this line
 		newItem->str = str;
+		newItem->next = 0;
 		newItem->prev = _back;
-		if(newItem->prev == 0)
-		{
+		if(_back != 0)
+			_back->next = newItem;
+		if(_front == 0)
 			_front = newItem;
-			newItem->next = 0;
-		}
-		else
-			newItem->prev->next = newItem;
 		_back = newItem;
 		_size++;
 	}
 
 	bool empty() const
 	{
-		return (_front == _back);
+		return (_front == 0)&&(_back == 0);
 	}
 
-	int size()
+	size_t size()
 	{
 		return _size;
 	}
@@ -117,81 +136,72 @@ class StringList {
 		while (!empty())
 		{
 			pop_front();
-			_size--;
 		}
+		_size = 0;
 	}
 
 	void pop_front()
 	{
-		// ptr2 = _front;
-		// _front = ptr2->next;
-		if(_front->next != 0)
+//		llist* ptr = _front;
+		_front = _front->next;
+		if(_front)
 		{
-			_front = _front->next;
-			_front->prev = NULL;
+			if(_front->prev)
+				_front->prev = _front->prev->prev;
 		}
 		else
-		{
-			_front = 0;
-		}
+			_back = 0;
+//		delete ptr;
 		_size--;
 	}
 	void pop_back()
 	{
-		// ptr2 = _back;
-		// _back = ptr2->prev;
-		if(_back->prev != 0)
+//		llist* ptr = _back;
+		_back = _back->prev;
+		if(_back)
 		{
-			_back = _back->prev;
-			_back->next = NULL;
+			if(_back->next)
+				_back->next = _back->next->next;
 		}
 		else
-		{
-			_back = 0;
-		}
+			_front = 0;
+//		delete ptr;
 		_size--;
 	}
 
 	void reverse()
 	{
-		llist *ptr = new llist;
-		llist *tmp = new llist;
-		for(ptr = _front; ptr->next != 0; ptr = ptr->next)
+//		llist *ptr = new llist; //Valgrind doesn't like this line
+//		llist *tmp = new llist; //Or this line
+		for(llist* ptr = _front; ptr != 0; ptr = ptr->next)
 		{
-			tmp = ptr->next;
+			llist* tmp = ptr->next;
 			ptr->next = ptr->prev;
 			ptr->prev = tmp;
 		}
-		tmp = _back;
+		llist* tmp2 = _back;
 		_back = _front;
-		_front = tmp;
-		delete tmp;
-		delete ptr;
+		_front = tmp2;
+//		tmp = NULL;
+//		delete tmp;
+//		delete ptr;
 	}
 
 	void unique()
 	{
-		llist *ptr = new llist;
-
-		for(ptr = _front; ptr != 0; ptr = ptr->next)
+		for(llist* ptr = _front; ptr != 0; ptr=ptr->next)
 		{
-			
-			while (ptr->next != 0 && ptr->str == ptr->next->str)
+			while((ptr->next != 0)&&(ptr->str==ptr->next->str))
 			{
-				llist *temp = ptr->next;
-				if(temp->next == 0)
-				{
-					_back = ptr;
-				}
-				else
-				{
-					ptr->next = ptr->next->next;
-					ptr->next->prev = ptr;
-				}
-				delete temp;
 				_size--;
+				llist* saveptr = ptr->next;
+				ptr->next = saveptr->next;
+				if(saveptr->next != 0)
+					saveptr->next->prev = ptr;
+				else
+					_back = ptr;
+				delete saveptr;
 			}
-
 		}
 	}
 		

@@ -33,10 +33,6 @@ int main()
 	a.push_front("C");
 	a.push_front("D");
 	a.push_back("E");
-	a.printData(1);
-	dbg(a.size());
-	dbg(a.front());
-	dbg(a.back());
 	Assert(a.size() == 5, "size method");
 	Assert(a.front() == "D", "front method");
 	a.pop_front();
@@ -52,8 +48,6 @@ int main()
 	StringList b;
 	b.push_back("R");
 	b.push_front("P");
-	a.printData(1);
-	b.printData(1);
 	a.clear();
 	Assert(a.empty(), "empty method");
 	a.push_back("K");
@@ -76,7 +70,6 @@ int main()
 			"reverse method test 2");
 	a.clear();
 	Assert(a.size() == 0,"clear test 2");
-
 	b.pop_back();
 	b.pop_front();
 	Assert(a.size() == b.size(), "clear using pop methods");
@@ -94,6 +87,5 @@ int main()
 	Assert(c.empty(), "clear and empty methods");
 	a.clear();
 	Assert(c.size() == a.size(), "clear and size methods");
-
 	return 0;
 }
